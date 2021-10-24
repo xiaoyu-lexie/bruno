@@ -40,15 +40,15 @@ const App = () => {
     })
 
     const updatedAllAfterAdding = await res.json()
-
-
     setProducts([...products, updatedAllAfterAdding])
   }
+
 
   return (
     <div>
      <Form fetchAll = {fetchAll} addProduct = {addProduct}/>
      <Products products = {products} />
+     {/* add edit and delete page */}
   </div>
   )
 }
