@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const postSchema = mongoose.Schema({
   title: String,
+  amazonLink: String,
   positionOrder: Number,
   promocode: String,
   promoStart: String, //Date

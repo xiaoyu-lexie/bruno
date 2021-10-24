@@ -2,10 +2,11 @@ import React, {useState}from 'react';
 import FileBase from 'react-file-base64';
 
 
-const Form = ({fetchAll}) => {
+const Form = ({fetchAll, addProduct}) => {
   const [inputData, setInputData] = useState(
     {
       title: "",
+      amazonLink: "",
       positionOrder: "",
       promocode: "",
       promoStart: "",
@@ -29,16 +30,10 @@ const Form = ({fetchAll}) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log('inputData', inputData)
 
-    await fetch('http://localhost:5000/products', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(inputData)
-    })
+    addProduct(inputData)
 
-    fetchAll();
   }
 
   return (
@@ -48,6 +43,11 @@ const Form = ({fetchAll}) => {
         <p>
           <label htmlFor='title'>Product Title: </label>
           <input type='text' id='title' name="title" onChange = {handleChange}></input>
+        </p>
+
+        <p>
+          <label htmlFor='amazonLink'>Product amazonLink: </label>
+          <input type='text' id='amazonLink' name="amazonLink" onChange = {handleChange}></input>
         </p>
 
         <p>
