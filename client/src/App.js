@@ -1,8 +1,10 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 import Form from './components/Form'
 import Products from './components/Products'
+import Edit from './pages/Edit'
 
 
 
@@ -17,8 +19,8 @@ const App = () => {
       const productsFomAPI = await fetchAll();
       setProducts(productsFomAPI)
     }
-    fetchedData();
 
+    fetchedData();
   }, [])
 
   // fetch all poducts
@@ -43,13 +45,27 @@ const App = () => {
     setProducts([...products, updatedAllAfterAdding])
   }
 
+  console.log('products', products)
+
 
   return (
-    <div>
-     <Form fetchAll = {fetchAll} addProduct = {addProduct}/>
-     <Products products = {products} />
-     {/* add edit and delete page */}
-  </div>
+    <Router>
+      <div>
+        <Switch>
+          <Route path = '/' exact>
+            <Form fetchAll = {fetchAll} addProduct = {addProduct}/>
+            <Products products = {products} />
+          </Route>
+          {/* <Route有2种写法，一个需要component，一个直接不需要；只有需要component的写法才能传递match, location这些。
+          这是需要component的写法： */}
+          <Route path = "/:id" component = {Edit} />
+          {/* 不需要component的写法： */}
+          {/* <Route path = '/:id'>
+            <Edit />
+          </Route> */}
+        </Switch>
+    </div>
+  </Router>
   )
 }
 
