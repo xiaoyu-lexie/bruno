@@ -2,6 +2,8 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
+import Axios from 'axios'
+
 import Form from './components/Form'
 import Products from './components/Products'
 import Edit from './pages/Edit'
@@ -25,27 +27,27 @@ const App = () => {
 
   // fetch all poducts
   const fetchAll = async () => {
-    console.log('fetchingall running')
+    // console.log('fetchingall running')
     const res = await fetch('http://localhost:5000/products')
     const data = await res.json()
     return data
   }
 
   //add product
-  const addProduct = async(newProduct) => {
+  const addProduct = async (newProduct) => {
     const res = await fetch('http://localhost:5000/products', {
       method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(newProduct)
+      body: newProduct
     })
+    // Axios.post('http://localhost:5000/products',newProduct)
+    // .then(res => console.log(res))
+    // .catch(err => console.log(err))
 
     const updatedAllAfterAdding = await res.json()
     setProducts([...products, updatedAllAfterAdding])
   }
 
-  console.log('products', products)
+  // console.log('products', products)
 
 
   return (

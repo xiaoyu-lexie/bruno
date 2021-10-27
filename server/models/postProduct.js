@@ -10,7 +10,7 @@ const postSchema = mongoose.Schema({
   category: String,
   tags : [String],
   themeColor: String,
-  selectedFile: String
+  image: String
 })
 
 const PostProduct = mongoose.model('bruno', postSchema);

@@ -1,4 +1,6 @@
 import express from 'express'
+import multer  from 'multer'
+const upload = multer({ dest: 'uploads/',limits: { fieldSize: 10 * 1024 * 1024 }})
 
 const router = express.Router();
 import PostProduct from  '../models/PostProduct.js'
@@ -23,17 +25,19 @@ const getProduct = async(req, res) => {
 }
 
 const createProduct = async(req, res) => {
+  // console.log('req', req)
   const post = req.body;
+  const image = req.file;
+  console.log('post here', post, 'image here', image)
+  // const newPost = new PostProduct(post);
 
-  const newPost = new PostProduct(post);
+  // try {
+  //   await newPost.save();
 
-  try {
-    await newPost.save();
-
-    res.status(201).json(newPost)
-  } catch (err) {
-    res.status(409).json({ message: err.message })
-  }
+  //   res.status(201).json(newPost)
+  // } catch (err) {
+  //   res.status(409).json({ message: err.message })
+  // }
 }
 
 const updateProduct = async(req, res) => {
@@ -52,7 +56,7 @@ const deleteProduct = async(req, res) => {
 router.get('/', getProducts)
 router.get('/:id', getProduct)
 
-router.post('/', createProduct)
+router.post('/', upload.single('file'), createProduct)
 
 router.patch('/:id', updateProduct)
 
