@@ -15,7 +15,7 @@ const Product =({product}) => {
           <p>{product.title}</p>
           <p>{product.promoStart}</p>
           <p>{product.promoEnd}</p>
-          <img src = {product.selectedFile} alt = ''></img>
+          <img src = {product.image} alt = ''></img>
       </a>
 
       <button>

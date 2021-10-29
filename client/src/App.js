@@ -34,20 +34,36 @@ const App = () => {
   }
 
   //add product
-  const addProduct = async (newProduct) => {
-    const res = await fetch('http://localhost:5000/products', {
-      method: 'POST',
-      body: newProduct
-    })
-    // Axios.post('http://localhost:5000/products',newProduct)
-    // .then(res => console.log(res))
-    // .catch(err => console.log(err))
+  // const addProduct = async (newProduct) => {
+  //   const res = await fetch('http://localhost:5000/products', {
+  //     method: 'POST',
+  //     body: newProduct
+  //   })
+  //   // Axios.post('http://localhost:5000/products',newProduct)
+  //   // .then(res => console.log(res))
+  //   // .catch(err => console.log(err))
 
-    const updatedAllAfterAdding = await res.json()
-    setProducts([...products, updatedAllAfterAdding])
-  }
+  //   // const updatedAllAfterAdding = await res.json()
+  //   // setProducts([...products, updatedAllAfterAdding])
+  // }
 
   // console.log('products', products)
+  const addProduct = async (newProductInfo) => {
+    try {
+        const res = await fetch('http://localhost:5000/products', {
+            method: 'POST',
+            body: JSON.stringify(newProductInfo),
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        const updatedAllAfterAdding = await res.json()
+        setProducts([...products, updatedAllAfterAdding])
+
+
+    } catch (err) {
+        console.error(err);
+    }
+};
 
 
   return (

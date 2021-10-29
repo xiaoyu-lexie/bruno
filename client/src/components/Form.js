@@ -3,6 +3,8 @@ import React, {useState}from 'react';
 
 
 const Form = ({fetchAll, addProduct}) => {
+  const [image, setImage] = useState('');
+  const [previewSource, setPreviewSource] = useState('');
   const [inputData, setInputData] = useState(
     {
       title: "",
@@ -14,10 +16,10 @@ const Form = ({fetchAll, addProduct}) => {
       category: "",
       tags: "",
       themeColor: "",
+      image:""
     }
   )
 
-  const [file, setFile] = useState();
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -29,27 +31,45 @@ const Form = ({fetchAll, addProduct}) => {
 
   const handleFileChange = (event) => {
     const upload = event.target.files[0];
-    setFile(upload);
+    setImage(upload);
+    previewFile(upload);
   }
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+        setPreviewSource(reader.result);
+    };
+};
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const data = new FormData();
-    data.append("title", inputData.title)
-    data.append("amazonLink", inputData.amazonLink)
-    data.append("positionOrder", inputData.positionOrder)
-    data.append("promocode", inputData.promocode)
-    data.append("promoStart", inputData.promoStart)
-    data.append("promoEnd", inputData.promoEnd)
-    data.append("category", inputData.category)
-    data.append("tags", inputData.tags)
-    data.append("themeColor", inputData.themeColor)
 
-    data.append("file", file)
+    if (!image) return;
 
+    const reader = new FileReader();
+    reader.readAsDataURL(image);
+    reader.onloadend = () => {
+      inputData.image = reader.result;
+      console.log(inputData)
+      addProduct(inputData);
+    };
 
-    addProduct(data)
+    // const data = new FormData();
+    // data.append("title", inputData.title)
+    // data.append("amazonLink", inputData.amazonLink)
+    // data.append("positionOrder", inputData.positionOrder)
+    // data.append("promocode", inputData.promocode)
+    // data.append("promoStart", inputData.promoStart)
+    // data.append("promoEnd", inputData.promoEnd)
+    // data.append("category", inputData.category)
+    // data.append("tags", inputData.tags)
+    // data.append("themeColor", inputData.themeColor）
+    // data.append("image", image)
+    // addProduct(data)
+
 
   }
 
@@ -113,6 +133,16 @@ const Form = ({fetchAll, addProduct}) => {
         <p>
         <label htmlFor='image'>theme color: </label>
           <input type='file' id='image' name="image" onChange = {handleFileChange}></input>
+        </p>
+
+        <p>
+          {previewSource && (
+                  <img
+                      src={previewSource}
+                      alt="chosen"
+                      style={{ height: '300px' }}
+                  />
+          )}
         </p>
 
         <button>Create New Product</button>
