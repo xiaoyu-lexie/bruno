@@ -15,6 +15,9 @@ const App = () => {
   // fetch all products
   const [products, setProducts] = useState([])
 
+  // refetch and reoder all products after each new insertion
+  const[refetch, setRefetch] = useState(1)
+
   useEffect( () => {
     console.log('useEffect running')
     const fetchedData = async() => {
@@ -23,11 +26,11 @@ const App = () => {
     }
 
     fetchedData();
-  }, [])
+  }, [refetch])
 
   // fetch all poducts
   const fetchAll = async () => {
-    // console.log('fetchingall running')
+    console.log('fetchingall running')
     const res = await fetch('http://localhost:5000/products')
     const data = await res.json()
     return data
@@ -56,9 +59,11 @@ const App = () => {
             headers: { 'Content-Type': 'application/json' },
         });
 
-        const updatedAllAfterAdding = await res.json()
-        setProducts([...products, updatedAllAfterAdding])
+        setRefetch(refetch+1)
+        console.log('refetch value', refetch)
 
+        // const updatedAllAfterAdding = await res.json()
+        // setProducts([...products, updatedAllAfterAdding])
 
     } catch (err) {
         console.error(err);

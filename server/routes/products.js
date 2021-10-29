@@ -12,7 +12,7 @@ import PostProduct from  '../models/PostProduct.js'
 
 const getProducts = async(req, res) => {
   try {
-    const products = await PostProduct.find();
+    const products = await PostProduct.find().sort({positionOrder:1, _id: -1});
     res.status(200).json(products)
   } catch(err) {
     res.status(404).json( { message: err.message })
@@ -35,6 +35,7 @@ const getProduct = async(req, res) => {
 
 const createProduct = async(req, res) => {
   // console.log('v2',cloudinary.v2.uploader)
+  // await PostProduct.deleteMany({});
   const post = req.body;
   // const image = req.file;
   // console.log('req body', post)

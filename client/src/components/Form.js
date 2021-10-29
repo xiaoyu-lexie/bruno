@@ -70,7 +70,6 @@ const Form = ({fetchAll, addProduct}) => {
     // data.append("image", image)
     // addProduct(data)
 
-
   }
 
   return (

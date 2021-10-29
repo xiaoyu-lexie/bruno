@@ -7,16 +7,28 @@ const Product =({product}) => {
     params1: product
   }
 
-  return (
-    <div>
-      <a href={`${product.amazonLink}`}>
+  const styles = {
+    backgroundColor: product.themeColor
+  }
 
-          <p>{product._id}</p>
-          <p>{product.title}</p>
-          <p>{product.promoStart}</p>
-          <p>{product.promoEnd}</p>
-          <img src = {product.image} alt = ''></img>
+  return (
+    <>
+      <a href={`${product.amazonLink}`}>
+        <div className = 'product' style={styles}>
+
+          <div className='text'>
+            <p>{product.title}</p>
+            <p>{product.promocode}</p>
+            <p>{product.promoStart}</p>
+            <p>{product.promoEnd}</p>
+          </div>
+
+          <div className='image'>
+            <img src = {product.image} alt = ''></img>
+          </div>
+        </div>
       </a>
+
 
       <button>
         <Link to= {newTo}>
@@ -24,7 +36,7 @@ const Product =({product}) => {
         </Link>
       </button>
 
-    </div>
+    </>
   )
 }
 
