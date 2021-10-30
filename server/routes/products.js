@@ -31,8 +31,6 @@ const getProduct = async(req, res) => {
 
 
 
-
-
 const createProduct = async(req, res) => {
   // console.log('v2',cloudinary.v2.uploader)
   // await PostProduct.deleteMany({});
@@ -96,6 +94,7 @@ const deleteProduct = async(req, res) => {
 }
 
 router.get('/', getProducts)
+
 router.get('/:id', getProduct)
 
 router.post('/', createProduct)

@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 
 import postsRoute from './routes/products.js'
+import categoryRoute from './routes/category.js'
+
 const app = express();
 
 app.use(bodyParse.json({ limit: "30mb", extended: true }))
@@ -12,6 +14,7 @@ app.use(cors())
 
 
 app.use('/products', postsRoute);
+app.use('/category', categoryRoute);
 
 
 const CONNECTION_URL = 'mongodb+srv://xiaoyu:javascript123@cluster0.xot7l.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'

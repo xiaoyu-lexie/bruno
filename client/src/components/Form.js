@@ -35,6 +35,15 @@ const Form = ({fetchAll, addProduct}) => {
     previewFile(upload);
   }
 
+  const handleMultiCategory = (event) => {
+    const {name, value} = event.target
+    const expandValue = inputData[name]+ '/' + value
+    setInputData({
+      ...inputData,
+      [name]: expandValue
+    })
+  }
+
   const previewFile = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -73,9 +82,9 @@ const Form = ({fetchAll, addProduct}) => {
   }
 
   return (
-    <div>
+    <div className='form'>
       <div>New product upload</div>
-      <form encType='multipart/form-data' onSubmit = {handleSubmit}>
+      <form  onSubmit = {handleSubmit}>
         <p>
           <label htmlFor='title'>Product Title: </label>
           <input type='text' id='title' name="title" onChange = {handleChange}></input>
@@ -109,13 +118,13 @@ const Form = ({fetchAll, addProduct}) => {
         <p>
           <label htmlFor='category'>category: </label>
 
-          <input type='checkbox' id='play' name="category" value = "play" onChange = {handleChange}></input>
+          <input type='checkbox' id='play' name="category" value = "play" onChange = {handleMultiCategory}></input>
           <label htmlFor = 'play'>play</label>
 
-          <input type='checkbox' id='eat' name="category" value = "eat" onChange = {handleChange}></input>
+          <input type='checkbox' id='eat' name="category" value = "eat" onChange = {handleMultiCategory}></input>
           <label htmlFor = 'eat'>eat</label>
 
-          <input type='checkbox' id='sleep' name="category" value = "sleep" onChange = {handleChange}></input>
+          <input type='checkbox' id='sleep' name="category" value = "sleep" onChange = {handleMultiCategory}></input>
           <label htmlFor = 'sleep'>sleep</label>
         </p>
 

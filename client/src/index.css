@@ -1,4 +1,26 @@
-.product {
+.each {
+  width: 80%;
   display: felx;
   /* flex-direction: column; */
 }
+
+.image {
+  width: 70%;
+}
+
+.app {
+  width: 100vw;
+  background-color: rgb(246, 237, 248);
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+}
+
+.category {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-berween;
+
+}
+

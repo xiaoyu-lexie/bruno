@@ -12,12 +12,13 @@ const Product =({product}) => {
   }
 
   return (
-    <>
+    <div className = 'product'>
       <a href={`${product.amazonLink}`}>
-        <div className = 'product' style={styles}>
+        <div className='each' style={styles}>
 
           <div className='text'>
             <p>{product.title}</p>
+            <p>{product.category}</p>
             <p>{product.promocode}</p>
             <p>{product.promoStart}</p>
             <p>{product.promoEnd}</p>
@@ -36,7 +37,7 @@ const Product =({product}) => {
         </Link>
       </button>
 
-    </>
+    </div>
   )
 }
 
