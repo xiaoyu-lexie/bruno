@@ -8,6 +8,7 @@ import Form from './components/Form'
 import Products from './components/Products'
 import Nav from './components/Nav'
 import Edit from './pages/Edit'
+import CategoryProducts from './pages/CategoryProducts'
 
 
 
@@ -19,25 +20,23 @@ const App = () => {
   // refetch and reoder all products after each new insertion
   const[refetch, setRefetch] = useState(1)
 
-  const [category, setCategory] = useState() //useState括号里的内容也会影响 category useEffect运行次数，如果这里的括号里是（‘’），每次页面刷新后 category useEffect会运行2次，但如果括号里是空的话，只运行1次
+  // const [categoryData, setCategoryData] = useState([])
 
-  // category useEffect
-  useEffect( () => {
-    // console.log('category useEffect running', category)
-    const fetchedCategotyData = async() => {
-      const productsFomCategoryAPI = await fetchCategory();
-      setProducts(productsFomCategoryAPI)
-      console.log('productsFomCategoryAPI', productsFomCategoryAPI)
-    }
+  const [playProducts, setPlayProducts] = useState([])
+  const [eatProducts, setEatProducts] = useState([])
+  const [sleepProducts, setSleepProducts] = useState([])
 
-    fetchedCategotyData();
-  }, [category])
+
+
+  // category useEffect and use useLayoutEffect to run before than useEffect
+
 
   // fetch all useEffect
   useEffect( () => {
-    // console.log('useEffect running')
+
     const fetchedData = async() => {
       const productsFomAPI = await fetchAll();
+      // console.log('fetchAll useEffect running')
       setProducts(productsFomAPI)
     }
 
@@ -45,22 +44,89 @@ const App = () => {
   }, [refetch])
 
 
+  // fetch category useEffect
+  // useEffect( () => {
+
+  //   const fetchedCataData = async() => {
+  //     const productsFomAPI = await fetchPlayCategory();
+  //     // console.log('fetchAll useEffect running')
+  //     setCategoryData(productsFomAPI)
+  //   }
+
+  //   fetchedCataData();
+  // }, [])
+
+
+  useEffect( () => {
+
+    const fetchedPlayData = async() => {
+      const playData = await fetchPlayCategory();
+      // console.log('fetchAll useEffect running')
+      setPlayProducts(playData)
+    }
+
+    fetchedPlayData();
+  }, [])
 
 
 
-
-  const fetchCategory = async(specificCategory) => {
+  const fetchPlayCategory = async() => {
     // console.log('fetching a category', category)
 
-    const res = await fetch(`http://localhost:5000/category/${category}`)
+    const res = await fetch(`http://localhost:5000/category/play`)
     const data = await res.json()
-    console.log('data', data)
+    // console.log('data', data)
     return data
   }
 
-  const invokeFetchCategory = (specificCategory) => {
-    setCategory(specificCategory)
+  useEffect( () => {
+
+    const fetchedEatData = async() => {
+      const eatData = await fetchEatCategory();
+      // console.log('fetchAll useEffect running')
+      setEatProducts(eatData)
+    }
+
+    fetchedEatData();
+  }, [])
+
+
+
+  const fetchEatCategory = async() => {
+    // console.log('fetching a category', category)
+
+    const res = await fetch(`http://localhost:5000/category/eat`)
+    const data = await res.json()
+    // console.log('data', data)
+    return data
   }
+
+
+  useEffect( () => {
+
+    const fetchedSleepData = async() => {
+      const sleepData = await fetchSleepCategory();
+      // console.log('fetchAll useEffect running')
+      setSleepProducts(sleepData)
+    }
+
+    fetchedSleepData();
+  }, [])
+
+
+  const fetchSleepCategory = async() => {
+    // console.log('fetching a category', category)
+
+    const res = await fetch(`http://localhost:5000/category/sleep`)
+    const data = await res.json()
+    // console.log('data', data)
+    return data
+  }
+
+
+
+
+
 
   // fetch all poducts
   const fetchAll = async () => {
@@ -110,15 +176,23 @@ const App = () => {
   return (
     <Router>
       <div className='app'>
+      <Nav playProducts= {playProducts} eatProducts= {eatProducts} sleepProducts={sleepProducts}/>
+
         <Switch>
           <Route path = '/' exact>
             <Form fetchAll = {fetchAll} addProduct = {addProduct}/>
-            <Nav fetchCategory={invokeFetchCategory} />
+
             <Products products = {products} />
           </Route>
+
+          <Route path ='/:category' exact component={CategoryProducts} />
+
+
+
+
           {/* <Route有2种写法，一个需要component，一个直接不需要；只有需要component的写法才能传递match, location这些。
           这是需要component的写法： */}
-          <Route path = "/:id" component = {Edit} />
+          <Route path = "/edit/:id" component = {Edit} />
           {/* 不需要component的写法： */}
           {/* <Route path = '/:id'>
             <Edit />

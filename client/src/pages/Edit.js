@@ -2,7 +2,7 @@ import {useState}from 'react';
 import FileBase from 'react-file-base64';
 
 const Edit = ({match, location}) => {
-  // console.log('params', match, location)
+  console.log('params', match, location)
 
   const id = match.params.id;
   const productInfo = location.params1;
@@ -39,7 +39,7 @@ const Edit = ({match, location}) => {
     })
   }
 
-  console.log('productInfo', productInfo.title)
+  // console.log('productInfo', productInfo.title)
 
   return (
     <div>

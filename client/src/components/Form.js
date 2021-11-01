@@ -64,7 +64,21 @@ const Form = ({fetchAll, addProduct}) => {
       inputData.image = reader.result;
       console.log(inputData)
       addProduct(inputData);
-    };
+
+    // setInputData({
+    //   title: "",
+    //   amazonLink: "",
+    //   positionOrder: "",
+    //   promocode: "",
+    //   promoStart: "",
+    //   promoEnd: "",
+    //   category: "",
+    //   tags: "",
+    //   themeColor: "",
+    //   image:""
+    // })
+
+  };
 
     // const data = new FormData();
     // data.append("title", inputData.title)

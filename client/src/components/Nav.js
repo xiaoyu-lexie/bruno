@@ -1,21 +1,14 @@
-const Nav = ({fetchCategory}) => {
+import SearchBar from './SearchBar'
+import Category from './Category'
 
-  const clickCategory = (e) => {
-    const category = e.target.value
-    fetchCategory(category)
-  }
+
+const Nav = ({playProducts, eatProducts, sleepProducts}) => {
+
 
   return (
     <nav>
-      <div>
-        search position
-      </div>
-
-      <div className='category'>
-        <button value='play' onClick={clickCategory}>play</button>
-        <button value='eat' onClick={clickCategory}>eat</button>
-        <button value='sleep' onClick={clickCategory}>sleep</button>
-      </div>
+      <SearchBar />
+      <Category playProducts= {playProducts} eatProducts={eatProducts} sleepProducts={sleepProducts}/>
     </nav>
   )
 }

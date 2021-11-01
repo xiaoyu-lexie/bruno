@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 const Product =({product}) => {
   const newTo = {
-    pathname: `/${product._id}`,
+    pathname: `/edit/${product._id}`,
     params1: product
   }
 
