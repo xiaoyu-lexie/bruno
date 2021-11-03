@@ -11,8 +11,9 @@ const router = express.Router();
 import PostProduct from  '../models/PostProduct.js'
 
 const getProducts = async(req, res) => {
+  // await PostProduct.deleteMany({});
   try {
-    const products = await PostProduct.find().sort({positionOrder:1, _id: -1});
+    const products = await PostProduct.find().sort({orderId:1});
     res.status(200).json(products)
   } catch(err) {
     res.status(404).json( { message: err.message })
@@ -33,7 +34,6 @@ const getProduct = async(req, res) => {
 
 const createProduct = async(req, res) => {
   // console.log('v2',cloudinary.v2.uploader)
-  // await PostProduct.deleteMany({});
   const post = req.body;
   // const image = req.file;
   // console.log('req body', post)
@@ -49,6 +49,33 @@ const createProduct = async(req, res) => {
     // const formData = new FormData();
     // formData.append('size', 'auto');
     // formData.append('image_url', beforeUrl)
+
+
+    const count = await PostProduct.count()
+    const positionOrder = parseInt(post.positionOrder)
+
+    if ( positionOrder> count) {
+      const insertOrderId = positionOrder*1000
+      post.orderId = insertOrderId
+      // console.log('post', post)
+    } else if (positionOrder > 1){
+
+
+      const before = await PostProduct.find().sort({orderId: 1}).skip(positionOrder - 2).limit(1).lean();
+      console.log('before', before)
+      const beforeOrderId = before[0].orderId
+      const after = await PostProduct.find().sort({orderId: 1}).skip(positionOrder - 1).limit(1).lean();
+      const afterOrderId = after[0].orderId
+      const insertOrderId = (beforeOrderId + afterOrderId) / 2
+      post.orderId = insertOrderId
+
+    } else {
+      const after = await PostProduct.find().sort({orderId: 1}).limit(1).lean();
+      const afterOrderId = after[0].orderId
+      const insertOrderId = afterOrderId/ 2
+      post.orderId = insertOrderId
+    }
+
 
 
 
@@ -68,6 +95,8 @@ const createProduct = async(req, res) => {
     const afterUrl = removeBackground.url
 
     post.image = afterUrl
+
+
 
     const newPost = new PostProduct(post);
 

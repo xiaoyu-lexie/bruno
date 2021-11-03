@@ -4,6 +4,7 @@ const postSchema = mongoose.Schema({
   title: String,
   amazonLink: String,
   positionOrder: Number,
+  orderId: Number,
   promocode: String,
   promoStart: String, //Date
   promoEnd: String, //Date

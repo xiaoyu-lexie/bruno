@@ -66,7 +66,7 @@ const App = () => {
     }
 
     fetchedPlayData();
-  }, [])
+  }, [refetch])
 
 
 
@@ -88,7 +88,7 @@ const App = () => {
     }
 
     fetchedEatData();
-  }, [])
+  }, [refetch])
 
 
 
@@ -111,7 +111,7 @@ const App = () => {
     }
 
     fetchedSleepData();
-  }, [])
+  }, [refetch])
 
 
   const fetchSleepCategory = async() => {
@@ -136,21 +136,7 @@ const App = () => {
     return data
   }
 
-  //add product
-  // const addProduct = async (newProduct) => {
-  //   const res = await fetch('http://localhost:5000/products', {
-  //     method: 'POST',
-  //     body: newProduct
-  //   })
-  //   // Axios.post('http://localhost:5000/products',newProduct)
-  //   // .then(res => console.log(res))
-  //   // .catch(err => console.log(err))
 
-  //   // const updatedAllAfterAdding = await res.json()
-  //   // setProducts([...products, updatedAllAfterAdding])
-  // }
-
-  // console.log('products', products)
   const addProduct = async (newProductInfo) => {
     try {
         await fetch('http://localhost:5000/products', {
